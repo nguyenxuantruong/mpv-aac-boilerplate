@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+    flavorDimensions "default"
     defaultConfig {
         applicationId "com.aac.aac.weatheraac"
         minSdkVersion 19
@@ -10,59 +11,88 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    productFlavors {
+        prod {
+            buildConfigField "String", "BASE_URL", "\"https://production.com\""
+        }
 
+        dev {
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            buildConfigField "String", "BASE_URL", "\"https://dev.com\""
+        }
+    }
 
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-    // retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/rxjava.properties'
+    }
 
-    // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-    implementation 'com.squareup.okio:okio:1.13.0'
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+        // Gson
+        implementation 'com.google.code.gson:gson:2.8.1'
+        implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+        implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
 
-    // Dagger
-    implementation 'com.google.dagger:dagger-compiler:2.6.1'
-    implementation 'com.google.dagger:dagger:2.6.1'
-    compileOnly 'javax.annotation:jsr250-api:1.0'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.6.1'
+        // retrofit
+        implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+        implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+        implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
-    // Butter Knife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        // OkHttp
+        implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+        implementation 'com.squareup.okio:okio:1.13.0'
 
-    // room
-    implementation "android.arch.persistence.room:runtime:1.1.1-rc1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.1-rc1"
+        // RxAndroid
+        implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+        implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
 
-    // Lifecycles
-    implementation "android.arch.lifecycle:runtime:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    implementation "android.arch.lifecycle:common-java8:1.1.1"
+        // Dagger
+        implementation 'com.google.dagger:dagger-compiler:2.6.1'
+        implementation 'com.google.dagger:dagger:2.6.1'
+        compileOnly 'javax.annotation:jsr250-api:1.0'
+        annotationProcessor 'com.google.dagger:dagger-compiler:2.6.1'
 
-    // ViewModel, LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+        // Butter Knife
+        implementation 'com.jakewharton:butterknife:8.8.1'
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+        // room
+        implementation "android.arch.persistence.room:runtime:1.1.1-rc1"
+        annotationProcessor "android.arch.persistence.room:compiler:1.1.1-rc1"
+
+        // Lifecycles
+        implementation "android.arch.lifecycle:runtime:1.1.1"
+        annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+        implementation "android.arch.lifecycle:common-java8:1.1.1"
+
+        // ViewModel, LiveData
+        implementation "android.arch.lifecycle:extensions:1.1.1"
+    }
 }
