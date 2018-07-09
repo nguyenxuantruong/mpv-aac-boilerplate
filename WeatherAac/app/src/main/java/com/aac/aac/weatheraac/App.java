@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.aac.aac.weatheraac.di.AppComponent;
 import com.aac.aac.weatheraac.di.AppModule;
 import com.aac.aac.weatheraac.di.DaggerAppComponent;
+import com.aac.aac.weatheraac.di.LobbyModule;
 import com.aac.aac.weatheraac.di.NetModule;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
@@ -21,6 +22,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .netModule(new NetModule(BuildConfig.BASE_URL))
+                .lobbyModule(new LobbyModule())
                 .build();
     }
 

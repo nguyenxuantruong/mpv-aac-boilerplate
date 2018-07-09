@@ -1,7 +1,10 @@
 package com.aac.aac.weatheraac.di;
 
+import android.util.Log;
+
 import com.aac.aac.weatheraac.App;
 import com.aac.aac.weatheraac.BuildConfig;
+import com.aac.aac.weatheraac.services.ApiService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -72,5 +75,19 @@ public class NetModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
+    }
+
+    /**
+     * Provide the {@link ApiService}
+     *
+     * @param retrofit The {@link Retrofit} instance
+     * @return The instance of {@link ApiService}
+     */
+    @Provides
+    @Singleton
+    ApiService provideApiService(Retrofit retrofit) {
+        Log.d("ddd", retrofit.toString());
+        Log.d("ddd " , retrofit.create(ApiService.class).toString());
+        return retrofit.create(ApiService.class);
     }
 }
