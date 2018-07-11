@@ -9,12 +9,17 @@ import android.webkit.WebResourceResponse;
 import com.aac.aac.weatheraac.App;
 import com.aac.aac.weatheraac.models.WeatherResponse;
 import com.aac.aac.weatheraac.services.ApiService;
+import com.orhanobut.logger.Logger;
+
+import org.reactivestreams.Subscriber;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends ViewModel {
@@ -38,10 +43,25 @@ public class MainViewModel extends ViewModel {
         disposable.clear();
     }
 
-    public Observable<WeatherResponse> loadWeatherData(double lat, double lon) {
-        return weatherRepository.getWeatherData(lat, lon)
-                .doOnNext(reponse -> {
-                    weatherResponseMutableLiveData.postValue(reponse);
+    public void loadWeatherData(double lat, double lon) {
+        weatherRepository.getWeatherData(lat, lon)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<WeatherResponse>() {
+                    @Override
+                    public void onNext(WeatherResponse weatherResponse) {
+                        weatherResponseMutableLiveData.postValue(weatherResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
                 });
     }
 

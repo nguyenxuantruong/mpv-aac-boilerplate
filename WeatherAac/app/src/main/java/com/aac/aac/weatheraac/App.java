@@ -10,6 +10,8 @@ import com.aac.aac.weatheraac.di.AppModule;
 import com.aac.aac.weatheraac.di.DaggerAppComponent;
 import com.aac.aac.weatheraac.di.LobbyModule;
 import com.aac.aac.weatheraac.di.NetModule;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
     private AppComponent appComponent;
@@ -24,6 +26,14 @@ public class App extends Application implements Application.ActivityLifecycleCal
                 .netModule(new NetModule(BuildConfig.BASE_URL))
                 .lobbyModule(new LobbyModule())
                 .build();
+
+        // Init logger
+        Logger.addLogAdapter(new AndroidLogAdapter() {
+            @Override
+            public boolean isLoggable(int priority, String tag) {
+                return BuildConfig.DEBUG; // Only show logs in DEBUG mode.
+            }
+        });
     }
 
     @Override

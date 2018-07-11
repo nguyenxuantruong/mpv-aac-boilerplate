@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.aac.aac.weatheraac.App;
+import com.aac.aac.weatheraac.BuildConfig;
 import com.aac.aac.weatheraac.R;
 import com.aac.aac.weatheraac.services.ApiService;
 

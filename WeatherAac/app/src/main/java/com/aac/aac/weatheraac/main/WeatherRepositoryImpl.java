@@ -18,11 +18,6 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 
     @Override
     public Observable<WeatherResponse> getWeatherData(double lat, double lng) {
-        return apiService.getWeatherData(lat, lat)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
-                .map(weatherResponse -> {
-                    return weatherResponse;
-                });
+        return apiService.getWeatherData(lat, lat);
     }
 }
