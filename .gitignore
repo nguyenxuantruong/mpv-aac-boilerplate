@@ -1,0 +1,12 @@
+*.iml
+WeatherAac/.gradle
+WeatherAac/local.properties
+WeatherAac/.idea/libraries
+WeatherAac/.idea/modules.xml
+WeatherAac/.idea/workspace.xml
+WeatherAac/.idea/*
+WeatherAac/.idea/**
+WeatherAac/.DS_Store
+WeatherAac/build
+WeatherAac/captures
+WeatherAac/.externalNativeBuild
