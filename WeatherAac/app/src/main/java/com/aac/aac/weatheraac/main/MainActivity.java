@@ -12,6 +12,8 @@ import com.aac.aac.weatheraac.services.ApiService;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
@@ -23,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        App.getAppComponent(this).inject(this);
-
+        AndroidInjection.inject(this);
 
 
         mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);

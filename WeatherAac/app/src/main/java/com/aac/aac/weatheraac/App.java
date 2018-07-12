@@ -13,19 +13,23 @@ import com.aac.aac.weatheraac.di.NetModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
-public class App extends Application implements Application.ActivityLifecycleCallbacks {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+
+public class App extends Application implements Application.ActivityLifecycleCallbacks, HasActivityInjector {
     private AppComponent appComponent;
 
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .netModule(new NetModule(BuildConfig.BASE_URL))
-                .lobbyModule(new LobbyModule())
-                .build();
+        DaggerAppComponent.builder().application(this).build().inject(this);
 
         // Init logger
         Logger.addLogAdapter(new AndroidLogAdapter() {
@@ -71,14 +75,8 @@ public class App extends Application implements Application.ActivityLifecycleCal
 
     }
 
-
-    /**
-     * Get AppComponent object.
-     *
-     * @param context The {@link Context}
-     * @return The instance of {@link AppComponent}
-     */
-    public static AppComponent getAppComponent(Context context) {
-        return ((App) context.getApplicationContext()).appComponent;
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
 }

@@ -1,5 +1,6 @@
 package com.aac.aac.weatheraac.di;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.aac.aac.weatheraac.App;
@@ -25,17 +26,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetModule {
 
-    private String baseUrl;
-
-    public NetModule(String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
-
     @Provides
     @Singleton
-    Cache provideHttpCache(App app) {
+    Cache provideHttpCache(Context context) {
         final int cacheSize = 10 * 1024 * 1024;     // 10 MB
-        return new Cache(app.getCacheDir(), cacheSize);
+        return new Cache(context.getCacheDir(), cacheSize);
     }
 
     @Provides
@@ -70,7 +65,7 @@ public class NetModule {
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
@@ -86,8 +81,6 @@ public class NetModule {
     @Provides
     @Singleton
     ApiService provideApiService(Retrofit retrofit) {
-        Log.d("ddd", retrofit.toString());
-        Log.d("ddd " , retrofit.create(ApiService.class).toString());
         return retrofit.create(ApiService.class);
     }
 }
