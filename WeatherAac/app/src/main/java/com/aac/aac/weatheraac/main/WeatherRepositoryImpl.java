@@ -1,13 +1,9 @@
 package com.aac.aac.weatheraac.main;
 
-import android.arch.lifecycle.LiveData;
-
 import com.aac.aac.weatheraac.models.WeatherResponse;
 import com.aac.aac.weatheraac.services.ApiService;
 
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-
 public class WeatherRepositoryImpl implements WeatherRepository {
 
     private ApiService apiService;

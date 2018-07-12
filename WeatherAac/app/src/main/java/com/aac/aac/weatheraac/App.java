@@ -2,14 +2,9 @@ package com.aac.aac.weatheraac;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 
-import com.aac.aac.weatheraac.di.AppComponent;
-import com.aac.aac.weatheraac.di.AppModule;
 import com.aac.aac.weatheraac.di.DaggerAppComponent;
-import com.aac.aac.weatheraac.di.LobbyModule;
-import com.aac.aac.weatheraac.di.NetModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -20,7 +15,6 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks, HasActivityInjector {
-    private AppComponent appComponent;
 
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;

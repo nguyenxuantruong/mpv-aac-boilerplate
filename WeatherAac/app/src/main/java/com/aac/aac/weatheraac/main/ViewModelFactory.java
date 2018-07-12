@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.aac.aac.weatheraac.services.ApiService;
 
-import java.security.Provider;
-import java.util.Map;
-
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private ApiService apiService;

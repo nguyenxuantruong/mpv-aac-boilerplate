@@ -1,9 +1,6 @@
 package com.aac.aac.weatheraac.di;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.aac.aac.weatheraac.App;
 import com.aac.aac.weatheraac.BuildConfig;
 import com.aac.aac.weatheraac.services.ApiService;
 import com.google.gson.FieldNamingPolicy;
