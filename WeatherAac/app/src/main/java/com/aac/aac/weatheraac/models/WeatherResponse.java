@@ -2,8 +2,12 @@ package com.aac.aac.weatheraac.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherResponse {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class WeatherResponse extends RealmObject {
+
+    @PrimaryKey
     @SerializedName("id")
     private int id;
 

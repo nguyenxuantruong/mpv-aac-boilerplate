@@ -9,7 +9,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("data/2.5/weather?appid=" + BuildConfig.API_ID + "&")
-    Observable<WeatherResponse> getWeatherData(@Query("lat") double lat,
-                                               @Query("lon") double lon);
+    @GET("data/2.5/weather?appid=" + BuildConfig.API_ID)
+    Observable<WeatherResponse> getWeatherData(@Query("id") int id);
 }

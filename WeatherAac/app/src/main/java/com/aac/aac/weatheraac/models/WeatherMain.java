@@ -3,7 +3,9 @@ package com.aac.aac.weatheraac.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherMain {
+import io.realm.RealmObject;
+
+public class WeatherMain extends RealmObject {
 
     @SerializedName("temp")
     @Expose

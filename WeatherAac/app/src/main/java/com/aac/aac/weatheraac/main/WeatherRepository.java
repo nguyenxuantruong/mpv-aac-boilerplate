@@ -7,5 +7,5 @@ import io.reactivex.Observable;
 
 public interface WeatherRepository {
 
-    Observable<WeatherResponse> getWeatherData(double lat, double lng);
+    Observable<WeatherResponse> getWeatherData(int id);
 }

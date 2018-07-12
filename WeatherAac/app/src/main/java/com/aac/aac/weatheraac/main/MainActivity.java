@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainViewModel mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
 
-        mainViewModel.getWeatherResponse(16.032137, 108.215470)
+        mainViewModel.getWeatherResponse(2172797)
                 .observe(this, weatherResponse -> {
                     Logger.d(weatherResponse.getName());
                     // TODO: 7/12/18  update UI

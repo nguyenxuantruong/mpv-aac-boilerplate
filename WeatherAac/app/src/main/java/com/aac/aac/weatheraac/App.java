@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.aac.aac.weatheraac.di.DaggerAppComponent;
+import com.aac.aac.weatheraac.services.DataMigration;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -13,8 +14,11 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks, HasActivityInjector {
+    private static final String REALM_NAME = "weather.realm";
 
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
@@ -24,6 +28,19 @@ public class App extends Application implements Application.ActivityLifecycleCal
         super.onCreate();
 
         DaggerAppComponent.builder().application(this).build().inject(this);
+
+        // config Realm database
+        Realm.init(this);
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
+        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("debug") || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
+            builder.deleteRealmIfMigrationNeeded();
+        }
+        builder.name(REALM_NAME)
+                .schemaVersion(DataMigration.REALM_SCHEMA_VERSION)
+                .migration(new DataMigration());
+        RealmConfiguration realmConfiguration = builder.build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        Realm.getInstance(realmConfiguration);
 
         // Init logger
         Logger.addLogAdapter(new AndroidLogAdapter() {
