@@ -33,8 +33,12 @@ public class WeatherRepositoryImpl implements WeatherRepository {
         WeatherResponse weather = localService.getCityWeather(id);
 
         // emit data
-        Observable<WeatherResponse> weatherLocal = Observable.just(weather).filter(localWeather -> localWeather != null);
-
-        return Observable.mergeDelayError(weatherLocal, weatherRemote);
+        if (weather == null) {
+            return weatherRemote;
+        } else {
+            Observable<WeatherResponse> weatherLocal = Observable.just(weather);
+            return Observable.mergeDelayError(weatherLocal, weatherRemote);
+        }
     }
+
 }
