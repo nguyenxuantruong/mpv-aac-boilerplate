@@ -5,7 +5,6 @@ import com.aac.aac.weatheraac.services.ApiService;
 import com.aac.aac.weatheraac.services.LocalService;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 public class WeatherRepositoryImpl implements WeatherRepository {
@@ -41,5 +40,4 @@ public class WeatherRepositoryImpl implements WeatherRepository {
             return Flowable.mergeDelayError(weatherLocal, weatherRemote);
         }
     }
-
 }
