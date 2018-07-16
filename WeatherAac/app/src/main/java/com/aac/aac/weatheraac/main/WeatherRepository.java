@@ -3,9 +3,9 @@ package com.aac.aac.weatheraac.main;
 
 import com.aac.aac.weatheraac.models.WeatherResponse;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface WeatherRepository {
 
-    Observable<WeatherResponse> getWeatherData(int id);
+    Flowable<WeatherResponse> getWeatherData(int id);
 }

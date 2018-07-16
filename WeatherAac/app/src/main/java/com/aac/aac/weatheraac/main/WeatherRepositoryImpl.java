@@ -4,6 +4,7 @@ import com.aac.aac.weatheraac.models.WeatherResponse;
 import com.aac.aac.weatheraac.services.ApiService;
 import com.aac.aac.weatheraac.services.LocalService;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -18,10 +19,10 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
-    public Observable<WeatherResponse> getWeatherData(int id) {
+    public Flowable<WeatherResponse> getWeatherData(int id) {
 
         // weather from remote
-        Observable<WeatherResponse> weatherRemote = apiService.getWeatherData(id)
+        Flowable<WeatherResponse> weatherRemote = apiService.getWeatherData(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(response -> {
@@ -36,8 +37,8 @@ public class WeatherRepositoryImpl implements WeatherRepository {
         if (weather == null) {
             return weatherRemote;
         } else {
-            Observable<WeatherResponse> weatherLocal = Observable.just(weather);
-            return Observable.mergeDelayError(weatherLocal, weatherRemote);
+            Flowable<WeatherResponse> weatherLocal = Flowable.just(weather);
+            return Flowable.mergeDelayError(weatherLocal, weatherRemote);
         }
     }
 

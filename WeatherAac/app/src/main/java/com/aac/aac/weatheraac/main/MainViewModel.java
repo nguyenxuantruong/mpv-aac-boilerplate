@@ -57,27 +57,12 @@ public class MainViewModel extends ViewModel {
 //                    }
 //                });
 
-
-
-        weatherRepository.getWeatherData(id)
+        disposable.add(weatherRepository.getWeatherData(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<WeatherResponse>() {
-                    @Override
-                    public void onNext(WeatherResponse weatherResponse) {
-                        weatherResponseMutableLiveData.postValue(weatherResponse);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                .subscribe(response -> {
+                    weatherResponseMutableLiveData.postValue(response);
+                }, Throwable::printStackTrace));
     }
 
     MutableLiveData<WeatherResponse> getWeatherResponse(int id) {
