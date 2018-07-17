@@ -1,5 +1,17 @@
 package com.aac.aac.weatheraac.models;
 
+import com.aac.aac.weatheraac.models.response.ResponseException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
+import retrofit2.Response;
+
 public class ResponseError {
 
     public static final int ERR_SOCKET_TIME_OUT = 0x011;
@@ -26,6 +38,12 @@ public class ResponseError {
         this.type = type;
     }
 
+    public ResponseError(Type type, final int errorCode, final String message) {
+        this.type = type;
+        this.errorCode = errorCode;
+        this.message = message;
+    }
+
     public int getErrorCode() {
         return errorCode;
     }
@@ -50,6 +68,31 @@ public class ResponseError {
      */
     public boolean isNoInternetConnection() {
         return this.type == Type.IN_APP_ERROR && this.errorCode == ERR_NO_INTERNET_CONNECTION;
+    }
+
+    public static ResponseError getResponseError(Throwable throwable) {
+
+        if (throwable instanceof HttpException) {
+            Response response = ((HttpException) throwable).response();
+            ResponseBody responseBody = response.errorBody();
+            return new ResponseError(ResponseError.Type.SERVER_ERROR, response.code(), getErrorMessage(responseBody));
+        } else if (throwable instanceof SocketTimeoutException) {
+            return new ResponseError(ResponseError.Type.SERVER_ERROR, ResponseError.ERR_SOCKET_TIME_OUT, "Opps, something went wrong..");
+        } else if (throwable instanceof ResponseException) {
+            return ((ResponseException) throwable).getError();
+        } else {
+            return new ResponseError(ResponseError.Type.UNKNOWN_ERROR, ResponseError.ERR_UNKNOWN, "Unknown!");
+        }
+    }
+
+    private static String getErrorMessage(ResponseBody responseBody) {
+        try {
+            JSONObject jsonObject = new JSONObject(responseBody.string());
+            return jsonObject.getString("errorMessage");
+
+        } catch (JSONException | IOException e) {
+            return e.getMessage();
+        }
     }
 }
 

@@ -1,22 +1,20 @@
 package com.aac.aac.weatheraac.models.response;
 
 import com.google.gson.annotations.SerializedName;
-
-import io.realm.RealmObject;
+import com.orhanobut.logger.Logger;
 
 public class BaseResponse {
 
     @SerializedName("cod")
-    private String cod;
+    private int cod;
 
     @SerializedName("message")
     private String message;
 
     public boolean hasError() {
-        return cod != null;
+        return cod / 100 != 2;
     }
-
-    public String getCod() {
+    public int getCod() {
         return cod;
     }
 

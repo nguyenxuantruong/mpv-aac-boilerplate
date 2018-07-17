@@ -1,7 +1,7 @@
 package com.aac.aac.weatheraac.services;
 
 import com.aac.aac.weatheraac.BuildConfig;
-import com.aac.aac.weatheraac.models.WeatherResponse;
+import com.aac.aac.weatheraac.models.response.WeatherResponse;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
