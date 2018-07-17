@@ -2,7 +2,7 @@
 
 This is code skeleton to build Android Application base on MVP pattern and ViewModel, LiveDat (in Android Architecture Components)
 
-####The boilerplate code include: 
+#### The boilerplate code include: 
 
 1. [Dagger 2](https://github.com/google/dagger): The fast dependency injector for Android and Java
 2. [Realm](https://realm.io): a mobile database
@@ -12,7 +12,7 @@ This is code skeleton to build Android Application base on MVP pattern and ViewM
 6. [LiveData](https://developer.android.com/topic/libraries/architecture/livedata):  is a data holder class that can be observed within a given lifecycle.
 
 
-####The main features:
+#### The main features:
 1. Save data into local storage with Realm (can use Room instead of).
 2. Chaining multiple sources with RxJava.
 3. Error handling.
