@@ -100,13 +100,13 @@ public class ResponseException extends RuntimeException {
             if (throwable instanceof HttpException) {
                 Response response = ((HttpException) throwable).response();
                 ResponseBody responseBody = response.errorBody();
-                return new ResponseError(com.aac.aac.weatheraac.models.ResponseError.Type.SERVER_ERROR, response.code(), getErrorMessage(responseBody));
+                return new ResponseError(ResponseError.Type.SERVER_ERROR, response.code(), getErrorMessage(responseBody));
             } else if (throwable instanceof SocketTimeoutException) {
-                return new ResponseError(com.aac.aac.weatheraac.models.ResponseError.Type.SERVER_ERROR, com.aac.aac.weatheraac.models.ResponseError.ERR_SOCKET_TIME_OUT, "Opps, something went wrong..");
+                return new ResponseError(ResponseError.Type.SERVER_ERROR, ResponseError.ERR_SOCKET_TIME_OUT, "Opps, something went wrong..");
             } else if (throwable instanceof ResponseException) {
                 return ((ResponseException) throwable).getError();
             } else {
-                return new ResponseError(com.aac.aac.weatheraac.models.ResponseError.Type.UNKNOWN_ERROR, com.aac.aac.weatheraac.models.ResponseError.ERR_UNKNOWN, "Unknown!");
+                return new ResponseError(ResponseError.Type.UNKNOWN_ERROR, ResponseError.ERR_UNKNOWN, "Unknown!");
             }
         }
 
