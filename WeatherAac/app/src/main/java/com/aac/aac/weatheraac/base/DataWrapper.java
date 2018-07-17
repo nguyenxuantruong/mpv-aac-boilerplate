@@ -1,12 +1,12 @@
 package com.aac.aac.weatheraac.main.base;
 
-import com.aac.aac.weatheraac.models.ResponseError;
+import com.aac.aac.weatheraac.models.response.ResponseException;
 
 public class DataWrapper<T> {
     private T data;
-    private ResponseError error;
+    private ResponseException.ResponseError error;
 
-    public DataWrapper(T data, ResponseError error) {
+    public DataWrapper(T data, ResponseException.ResponseError error) {
         this.data = data;
         this.error = error;
     }
@@ -23,11 +23,11 @@ public class DataWrapper<T> {
         this.data = data;
     }
 
-    public ResponseError getError() {
+    public ResponseException.ResponseError getError() {
         return error;
     }
 
-    public void setError(ResponseError error) {
+    public void setError(ResponseException.ResponseError error) {
         this.error = error;
     }
 }

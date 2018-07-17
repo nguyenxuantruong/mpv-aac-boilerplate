@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.aac.aac.weatheraac.main.base.DataWrapper;
-import com.aac.aac.weatheraac.models.ResponseError;
 import com.aac.aac.weatheraac.models.Weather;
+import com.aac.aac.weatheraac.models.response.ResponseException;
 import com.aac.aac.weatheraac.services.ApiService;
 import com.aac.aac.weatheraac.services.LocalService;
 
@@ -58,7 +58,7 @@ public class MainViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> weatherResponseMutableLiveData.postValue(new DataWrapper<>(response, null)), throwable -> {
-                    ResponseError responseError = ResponseError.getResponseError(throwable);
+                    ResponseException.ResponseError responseError = ResponseException.ResponseError.getResponseError(throwable);
                     weatherResponseMutableLiveData.postValue(new DataWrapper<>(null, responseError));
                 }));
     }
